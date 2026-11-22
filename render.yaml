@@ -1,0 +1,21 @@
+# Render Blueprint — AI Agent Living World backend (gratis / free tier).
+# Cara pakai: di dashboard Render, New -> Blueprint, pilih repo
+# robertcaniago7/ai-agent-living-world (branch main), lalu isi
+# GEMINI_API_KEY di halaman Environment (key dibuat gratis di
+# Google AI Studio: https://aistudio.google.com).
+# Frontend (GitHub Pages) mengarah ke service ini lewat VITE_API_URL.
+services:
+  - type: web
+    name: ai-agent-living-world-server
+    runtime: node
+    branch: main
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
