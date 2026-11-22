@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ args: ['--use-gl=angle','--use-angle=swiftshader','--disable-gpu-sandbox','--no-sandbox'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const errors = [];
+page.on('pageerror', (e) => errors.push(String(e)));
+page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+await page.waitForTimeout(9000);
+await page.click('button[title="Cuaca: Cerah — klik untuk Hujan"]');
+await page.waitForTimeout(4000);
+const w = await page.evaluate(() => window.__luxTest.getState().weather);
+console.log('weather =', w);
+await page.screenshot({ path: '/home/hatch/workspace/ai-agent-living-world/docs/screenshot-phase2-rain.png' });
+console.log('errors:', errors.length ? errors.join(' | ') : 'none');
+await browser.close();
