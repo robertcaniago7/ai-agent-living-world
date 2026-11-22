@@ -93,7 +93,7 @@ def main():
 
     # 5. create commit (parent = current HEAD)
     new_commit = gh("POST", f"/repos/{OWNER}/{REPO}/git/commits", {
-        "message": "Living World: add server/Dockerfile + .dockerignore for Koyeb deploy (free tier, no card)",
+        "message": "Living World: add root Dockerfile + .dockerignore for Back4App Containers deploy (free tier, no card)",
         "tree": tree["sha"],
         "parents": [head_sha],
     })
